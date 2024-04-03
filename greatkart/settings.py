@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "category",
     "accounts",
     "store",
+    "carts",
 ]
 
 MIDDLEWARE = [
@@ -66,6 +67,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'category.context_processors.menu_links', #for category menu in base template
+                'category.context_processors.get_cart_items', # for cart icon in the navigation bar
             ],
         },
     },
