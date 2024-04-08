@@ -1,0 +1,10 @@
+
+{% autoescape off %}
+Hi {{user.first_name | lower | capfirst}} 
+please ckick the link below to verify your account:
+
+http://{{domain}}{% url 'activate' uidb64=uid token=token %}
+
+This email was sent to {{user.first_name}} {{user.last_name}}. 
+If it is not you PLEASE IGNORE THIS EMAIL.
+{% endautoescape %}

@@ -9,6 +9,6 @@ class AccountAdmin(UserAdmin):
     readonly_fields=('last_login','date_joined')
     ordering=('-date_joined',)
     filter_horizontal=()
-    list_filter=()
+    list_filter=('first_name','last_name','username')
     fieldsets=()
 admin.site.register(Account,AccountAdmin)
