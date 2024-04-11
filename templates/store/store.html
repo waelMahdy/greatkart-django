@@ -8,6 +8,7 @@
   <div class="container">
     {% if 'search' in request.path %}
     <h2 class="title-page">Search result</h2>
+    <small><p></p>Search result for: {{keyword}}</p></small>
     {% else %}
     <h2 class="title-page">Our Store</h2>
     {% endif %}
