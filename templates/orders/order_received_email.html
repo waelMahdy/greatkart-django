@@ -1,0 +1,19 @@
+
+{% autoescape off %}
+Hi {{user.first_name | lower | capfirst}},
+
+Your order has been received:
+
+Order number: {{order.order_number}}
+Items included:
+{% for Item in cart_items %}
+
+- {{Item.quantity}} x {{Item.product.product_name}} at ${{Item.product.price|floatformat:2}} each
+
+{% endfor %}
+
+Thank you
+
+
+
+{% endautoescape %}
