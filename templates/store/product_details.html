@@ -23,7 +23,16 @@
           <main class="col-md-6 border-left">
             <article class="content-body">
               <h2 class="title">Off-White Odsy-1000 Low-Top Sneakers</h2>
-
+              <div>
+                <span>
+                  <i class="fa fa-star{% if product.average_review < 0.5 %}-o{% elif product.average_review >= 0.5 and product.average_review  < 1 %}-half{% endif %}"aria-hidden="true" style="color:#ffb503;"></i>
+                  <i class="fa fa-star{% if product.average_review < 1.5 %}-o{% elif product.average_review >= 1.5 and product.average_review  < 2 %}-half{% endif %}"aria-hidden="true" style="color:#ffb503;"></i>
+                  <i class="fa fa-star{% if product.average_review < 2.5 %}-o{% elif product.average_review >= 2.5 and product.average_review  < 3 %}-half{% endif %}"aria-hidden="true" style="color:#ffb503;"></i>
+                  <i class="fa fa-star{% if product.average_review < 3.5 %}-o{% elif product.average_review >= 3.5 and product.average_review  < 4 %}-half{% endif %}"aria-hidden="true" style="color:#ffb503;"></i>
+                  <i class="fa fa-star{% if product.average_review < 4.5 %}-o{% elif product.average_review >= 4.5 and product.average_review  < 5 %}-half{% endif %}"aria-hidden="true" style="color:#ffb503;"></i>
+                  <span><small>{{product.count_reviews}} reviews</small></span>
+                </span> 
+              </div>
               <div class="mb-3">
                 <var class="price h4">${{product.price}}</var>
               </div>
@@ -79,11 +88,24 @@
     <br />
 
     <div class="row">
+      {% include "includes/alert.html" %}
       <div class="col-md-9">
         <header class="section-heading">
-          <h3>Customer Reviews</h3>
+         
+          <h3>Customers Reviews</h3>
+          <div>
+            <span>
+              <i class="fa fa-star{% if product.average_review < 0.5 %}-o{% elif product.average_review >= 0.5 and product.average_review  < 1 %}-half{% endif %}"aria-hidden="true" style="color:#ffb503;"></i>
+              <i class="fa fa-star{% if product.average_review < 1.5 %}-o{% elif product.average_review >= 1.5 and product.average_review  < 2 %}-half{% endif %}"aria-hidden="true" style="color:#ffb503;"></i>
+              <i class="fa fa-star{% if product.average_review < 2.5 %}-o{% elif product.average_review >= 2.5 and product.average_review  < 3 %}-half{% endif %}"aria-hidden="true" style="color:#ffb503;"></i>
+              <i class="fa fa-star{% if product.average_review < 3.5 %}-o{% elif product.average_review >= 3.5 and product.average_review  < 4 %}-half{% endif %}"aria-hidden="true" style="color:#ffb503;"></i>
+              <i class="fa fa-star{% if product.average_review < 4.5 %}-o{% elif product.average_review >= 4.5 and product.average_review  < 5 %}-half{% endif %}"aria-hidden="true" style="color:#ffb503;"></i>
+            <span><small>{{product.count_reviews}} reviews</small></span>
+            </span> 
+          </div>
         </header>
-
+        
+        {% for review in reviews %}
         <article class="box mb-3">
           <div class="icontext w-100">
             <img
@@ -91,20 +113,64 @@
               class="img-xs icon rounded-circle"
             />
             <div class="text">
-              <span class="date text-muted float-md-right">24.04.2020 </span>
-              <h6 class="mb-1">Mike John</h6>
+              <span class="date text-muted float-md-right">{{review.created_at}} </span>
+              <h6 class="mb-1">{{review.user.full_name}}</h6><br>
+              <div>
+                <span>
+                  <i class="fa fa-star{% if review.rating == 0.5 %}-half{% elif review.rating < 1 %}-o{% endif %}"aria-hidden="true" style="color:#ffb503;"></i>
+                  <i class="fa fa-star{% if review.rating == 1.5 %}-half{% elif review.rating < 2 %}-o{% endif %}"aria-hidden="true" style="color:#ffb503;"></i>
+                  <i class="fa fa-star{% if review.rating == 2.5 %}-half{% elif review.rating < 3 %}-o{% endif %}"aria-hidden="true" style="color:#ffb503;"></i>
+                  <i class="fa fa-star{% if review.rating == 3.5 %}-half{% elif review.rating < 4 %}-o{% endif %}"aria-hidden="true" style="color:#ffb503;"></i>
+                  <i class="fa fa-star{% if review.rating == 4.5 %}-half{% elif review.rating < 5 %}-o{% endif %}"aria-hidden="true" style="color:#ffb503;"></i>
+                </span> 
+              </div>
             </div>
           </div>
           <!-- icontext.// -->
           <div class="mt-3">
+            <h6 class='Video-SubTitle'><span>{{review.subject}}</span></h6>
             <p>
-              Dummy comment Lorem ipsum dolor sit amet, consectetur adipisicing
-              elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-              aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-              laboris nisi ut aliquip
+              {{review.review}}
             </p>
           </div>
-        </article>
+        </article><br>
+        {% endfor %}
+        <form action="{% url 'submit_review' product.id %}" method='POST'>
+          {% csrf_token %}
+          <h5>Post your review. </h5>
+          <div>
+            <label >How do you rate this product?</label><br>
+            <div class='rate'>
+              <input type='radio' name='rating' id='rating10' value='5'  required/><label for='rating10'title='5'></label>
+              <input type='radio' name='rating' id='rating9' value='4.5'  required/><label for='rating9' class='half' title='4.5'></label>
+              <input type='radio' name='rating' id='rating8' value='4'  required/><label for='rating8'title='4'></label>
+              <input type='radio' name='rating' id='rating7' value='3.5'  required/><label for='rating7' class='half' title='3.5'></label>
+              <input type='radio' name='rating' id='rating6' value='3'  required/><label for='rating6'title='3'></label>
+              <input type='radio' name='rating' id='rating5' value='2.5'  required/><label for='rating5' class='half' title='2.5'></label>
+              <input type='radio' name='rating' id='rating4' value='2'  required/><label for='rating4'title='2'></label>
+              <input type='radio' name='rating' id='rating3' value='1.5'  required/><label for='rating3' class='half' title='1.5'></label>
+              <input type='radio' name='rating' id='rating2' value='1'  required/><label for='rating2'title='1'></label>
+              <input type='radio' name='rating' id='rating1' value='0.5'  required/><label for='rating1' class='half' title='0.5'></label>
+               
+            </div><br>
+            Review title:
+            <input type='text' class='form-control' name='subject' />
+            <br>
+            Review:
+            <textarea class='form-control' name='review' rows='4' ></textarea>
+            <br>
+            {% if user.is_authenticated %}
+            {% if order_product %}
+            <input type='submit' class='btn btn-primary-light' value='Submit'>
+            {% else %}
+            <p><span>You need to purchase the product before submitting a review. Please add it to shopping cart button above and then try again.</span></p>
+            {% endif %}
+            {% else %}
+            <p><strong>You must be logged in to post a review.</strong> <span><a href="{% url 'login'  %}">login now</a></span></p>
+            {% endif %}
+          </div>
+         
+         </form>
       </div>
       <!-- col.// -->
     </div>
@@ -114,3 +180,6 @@
 </section>
 <!-- ========================= SECTION CONTENT END// ========================= -->
 {% endblock content %}
+
+
+

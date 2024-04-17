@@ -60,7 +60,8 @@ class OrderProduct(models.Model):
     ordered=models.BooleanField(default=False)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
-
+    def order_product_items_price(self):
+        return self.product.price * self.quantity
     def __str__(self):
         return self.product.product_name
     

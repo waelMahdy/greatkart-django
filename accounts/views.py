@@ -136,7 +136,7 @@ def login(request):
            try:
                #query=urlparse(url).query.split("=")[1]
                query=urlparse(url).query
-               print('query',query)
+               
                params=dict(x.split('=') for x in query.split('&'))
                print('params',params)
                if 'next' in params:

@@ -14,7 +14,10 @@ class OrderAdmin(admin.ModelAdmin):
     list_per_page=20
     filter_horizontal=()
     inlines= [OrderProductInline]
+class PaymentrAdmin(admin.ModelAdmin): 
+        search_fields=['Payment_id','currency_code']
+   
 
 admin.site.register(Order,OrderAdmin)
 admin.site.register(OrderProduct)
-admin.site.register(Payment)
+admin.site.register(Payment,PaymentrAdmin)

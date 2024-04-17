@@ -8,7 +8,8 @@ from greatkart import settings
 from orders.form import OrderForm
 from orders.models import Order, OrderProduct, Payment
 from decimal import Decimal
-
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
 from store.models import Product
 #email
 from django.core.mail import EmailMessage
@@ -167,6 +168,58 @@ def order_complete(request):
             'payment':payment,
             'sub_total':sub_total,
         }
+        save_pdf(transaction_id,order,payment)
         return render(request,'orders/order_complete.html',context)
     except( Order.DoesNotExist,Payment.DoesNotExist):
         return redirect('home')
+    
+def save_pdf(transaction_id,order,payment):
+    try:
+            
+
+            # Assuming you've extracted the relevant data
+            invoice_number = transaction_id
+            invoice_date = order.created_at.strftime("%B %d,%Y")
+            invoice_amount = payment.amount_paid
+            order_number=order.order_number
+
+            # Create a PDF file
+            output_filename = 'templates/pdfs/'+order.order_number+'.pdf'
+            c = canvas.Canvas(output_filename, pagesize=letter)
+            # Set font and font size
+            c.setFont("Helvetica-Bold", 14)  # Bold font for the header
+
+            # Write the header
+            c.drawString(300, 750, "Invoice Details")
+            # Set font and font size
+            c.setFont("Helvetica", 12)
+            # Create a table for the invoice details
+            table_data = [
+                            ["Invoice Number :", invoice_number],
+                            ["Invoice Date :", invoice_date],
+                            ["Invoice Amount :", "${:.2f}".format(invoice_amount)],
+                            ["Order number :", order_number],
+                        ]
+            # Set table properties
+            table_x = 100
+            table_y = 660
+            row_height = 20
+            col_width1 = 120
+            col_width2 = 200
+            # Draw the table with thicker lines
+            c.line(table_x, table_y, table_x + col_width1 + col_width2, table_y)  # Top horizontal line
+            # Draw the table
+            for row in table_data:
+                c.drawString(table_x, table_y - row_height, row[0])
+                c.drawString(table_x + col_width1, table_y - row_height, row[1])
+                c.line(table_x, table_y - row_height, table_x + col_width1 + col_width2, table_y - row_height)
+                #Horizontal lines
+                table_y -= row_height
+
+            # Save the PDF
+            c.save()
+
+            print(f"Invoice details saved to {output_filename}")
+    except  Exception as e:
+            print('E',e)
+            pass    
