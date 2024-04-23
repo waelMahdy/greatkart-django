@@ -3,6 +3,7 @@ from django.urls import reverse
 from accounts.models import Account
 from category.models import Category
 from django.db.models import Avg, Count
+
 # Create your models here.
 class Product(models.Model):
     product_name=models.CharField(max_length=100,unique=True)
@@ -71,3 +72,13 @@ class ReviewRating(models.Model):
 
     def __str__(self):
         return self.subject
+    
+class ProductGalary(models.Model):
+    product=models.ForeignKey(Product,default=None,on_delete=models.CASCADE)
+    image=models.ImageField(upload_to='store/products',max_length=225)  
+
+    def __str__(self):
+        return self.product.product_name
+    class Meta:
+        verbose_name='Product Gallary'
+        verbose_name_plural='Products Gallary'

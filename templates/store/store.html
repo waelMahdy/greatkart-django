@@ -169,6 +169,20 @@
                   <a href="{{product.get_url}}" class="title"
                     >{{product.product_name}}</a
                   >
+                  <div>
+                    <span>
+                      <i class="fa fa-star{% if product.average_review < 0.5 %}-o{% elif product.average_review >= 0.5 and product.average_review  < 1 %}-half{% endif %}"
+                      aria-hidden="true" style="color:#ffb503;"></i>
+                      <i class="fa fa-star{% if product.average_review < 1.5 %}-o{% elif product.average_review >= 1.5 and product.average_review  < 2 %}-half{% endif %}"
+                      aria-hidden="true" style="color:#ffb503;"></i>
+                      <i class="fa fa-star{% if product.average_review < 2.5 %}-o{% elif product.average_review >= 2.5 and product.average_review  < 3 %}-half{% endif %}"
+                      aria-hidden="true" style="color:#ffb503;"></i>
+                      <i class="fa fa-star{% if product.average_review < 3.5 %}-o{% elif product.average_review >= 3.5 and product.average_review  < 4 %}-half{% endif %}"
+                      aria-hidden="true" style="color:#ffb503;"></i>
+                      <i class="fa fa-star{% if product.average_review < 4.5 %}-o{% elif product.average_review >= 4.5 and product.average_review  < 5 %}-half{% endif %}"
+                      aria-hidden="true" style="color:#ffb503;"></i>
+                    </span>
+                  </div>
                   <div class="price-wrap mt-2">
                     <span class="price">${{product.price}}</span>
                     <del class="price-old">${{product.price}}</del>

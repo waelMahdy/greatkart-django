@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
+from decouple import config
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,12 +20,12 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'f(jh1!+ddr1govpnnf%ndem6e%kiux8sw!nltpq&jksws=^7j&'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG',default=True,cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['django-env.eba-qebikc3c.us-west-2.elasticbeanstalk.com']
 
 
 # Application definition
@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     "accounts",
     "store",
     "carts",
-    "orders"
+    "orders",
+    "admin_honeypot",  # admin honeypot package to prevent spam attacks
 ]
 
 MIDDLEWARE = [
@@ -52,8 +53,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_session_timeout.middleware.SessionTimeoutMiddleware',
 ]
-
+SESSION_EXPIRE_SECONDS = 3600  # 1 hour is 3600
+SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
+SESSION_TIMEOUT_REDIRECT = '/accounts/login/'
 ROOT_URLCONF = 'greatkart.urls'
 
 TEMPLATES = [
@@ -83,22 +87,22 @@ AUTH_USER_MODEL='accounts.Account'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 DATABASES = {
-   'default': {
-       'ENGINE': 'django.db.backends.postgresql',
-       'NAME': 'railway',
-       'USER': 'postgres',
-       'PASSWORD': 'dCBbWVeLeaSnbputfOVChvuMxCAbCjMX',
-       'HOST': 'viaduct.proxy.rlwy.net',
-       'PORT': '16622',
-   }
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
+# DATABASES = {
+#    'default': {
+#        'ENGINE': config('ENGINE'),
+#        'NAME': 'railway',
+#        'USER': 'postgres',
+#        'PASSWORD':config('PASSWORD'),
+#        'HOST': 'viaduct.proxy.rlwy.net',
+#        'PORT': config('PORT'),
+#    }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -157,8 +161,8 @@ MESSAGE_TAGS={
 # SMTP configuration
 
 EMAIL_HOST='smtp.mail.yahoo.com'
-EMAIL_HOST_USER='wael_mahdy001@yahoo.com'
-EMAIL_HOST_PASSWORD='pgzsftvroibkolld'
-EMAIL_PORT=587 
+EMAIL_HOST_USER=config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD=config('EMAIL_HOST_PASSWORD')
+EMAIL_PORT=config('EMAIL_PORT',cast=int)
 EMAIL_USE_TLS=True
 EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'

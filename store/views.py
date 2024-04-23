@@ -6,7 +6,7 @@ from carts.views import _cart_id
 from category.models import Category
 from orders.models import OrderProduct
 from store.forms import ReviewForm
-from store.models import Product, ReviewRating
+from store.models import Product, ProductGalary, ReviewRating
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from django.contrib.auth.decorators import  login_required
@@ -28,11 +28,13 @@ def store(request,category_slug=None):
         page=request.GET.get('page')
         paged_products=paginator.get_page(page)
         product_count=products.count()
-    
+    for product in products:
+      reviews=ReviewRating.objects.filter(product_id=product.id,status=True) 
     context={
         'Products':paged_products,
         'product_count':product_count,
         'categories':categories,
+        'reviews':reviews,
     }
     return render(request,'store/store.html',context)
 def product_details(request,category_slug,product_slug):
@@ -49,12 +51,15 @@ def product_details(request,category_slug,product_slug):
             order_product=None   
     except OrderProduct.DoesNotExist:
         order_product=None  
-    reviews=ReviewRating.objects.filter(product_id=single_product.id,status=True)      
+    reviews=ReviewRating.objects.filter(product_id=single_product.id,status=True) 
+    #get the product galary
+    product_galary= ProductGalary.objects.filter(product=single_product)    
     context={
         'product':single_product,
         'in_cart':in_cart,
         'order_product':order_product,
         'reviews':reviews,
+        'product_galary':product_galary,
     }
     return render(request,'store/product_details.html',context)
 
