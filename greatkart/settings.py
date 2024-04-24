@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
+import os
 from decouple import config
 from pathlib import Path
 
@@ -20,7 +21,7 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')eb status
+SECRET_KEY = config('SECRET_KEY')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -88,12 +89,26 @@ AUTH_USER_MODEL='accounts.Account'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = {
+if 'RDS_DB_NAME' in os.environ:
+    DATABASES={'default':{
+                   'ENGINE':'django.db.backends.postgresql',
+                   'NAME':os.environ['RDS_DB_NAME'],
+                   'HOST':os.environ['RDS_HOSTNAME'],
+                   'PORT':os.environ['RDS_PORT'],
+                   'USER':os.environ['RDS_USERNAME'],
+                   'PASSWORD':os.environ['RDS_PASSWORD'],
+               }
+           }
+else:
+    DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+
+
 # DATABASES = {
 #    'default': {
 #        'ENGINE': config('ENGINE'),
