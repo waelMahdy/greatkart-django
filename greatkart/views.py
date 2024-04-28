@@ -11,9 +11,7 @@ def home(request):
         for product in products:
 
           reviews=ReviewRating.objects.filter(product_id=product.id,status=True)
-          print('reviews 1:',reviews)
     except:
-        print('reviews 2:',reviews)  
         reviews=None   
          
              
