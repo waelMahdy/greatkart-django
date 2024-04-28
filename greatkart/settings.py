@@ -27,7 +27,7 @@ SECRET_KEY = config('SECRET_KEY',default='f(jh1!+ddr1govpnnf%ndem6e%kiux8sw!nltp
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG',default=True,cast=bool)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS')
+ALLOWED_HOSTS = config('ALLOWED_HOSTS',default=['*'])
 
 
 # Application definition
