@@ -27,7 +27,7 @@ SECRET_KEY = config('SECRET_KEY',default='f(jh1!+ddr1govpnnf%ndem6e%kiux8sw!nltp
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG',default=True,cast=bool)
 
-ALLOWED_HOSTS = ['ssss.eba-iuhrpdpp.us-west-2.elasticbeanstalk.com',['*']]
+ALLOWED_HOSTS = ['ssss.eba-iuhrpdpp.us-west-2.elasticbeanstalk.com',['*'],'172.31.2.82']
 
 
 # Application definition
