@@ -10,18 +10,18 @@
           <h4 class="text-center m-auto"> Review your order and make payment</h4>
             <aside class="col-lg-8">
                 <div class="card">
-                    <h5 class="card-header " > Billing address:</h5>
+                    <h5 class="card-header" > Billing address:</h5>
                       
                     
                     <div class="card-body">                                                         
                       <p class="card-text mb-0">{{order.full_name}}.</p>                                
-                      <p class="card-text mb-0"">{{order.full_address}}</p>                
-                      <p class="card-text mb-0"">{{order.postal_code}}</p>                
-                      <p class="card-text mb-0"">{{order.city}}</p>                
-                      <p class="card-text mb-0"">{{order.state}}</p>                
-                      <p class="card-text mb-0"">{{order.country}}</p>  
+                      <p class="card-text mb-0">{{order.full_address}}</p>                
+                      <p class="card-text mb-0">{{order.postal_code}}</p>                
+                      <p class="card-text mb-0">{{order.city}}</p>                
+                      <p class="card-text mb-0">{{order.state}}</p>                
+                      <p class="card-text mb-0">{{order.country}}</p>  
                       {% if order.order_note %}              
-                      <p class="card-text mb-0"">order note: {{order.order_note}}</p>
+                      <p class="card-text mb-0">order note: {{order.order_note}}</p>
                       {% endif %}                
                     </div>
                   </div>
@@ -51,8 +51,7 @@
                                     <figure class="itemside align-items-center">
                                         <div class="aside"><img src="{{item.product.image.url}}" class="img-sm"></div>
                                         <figcaption class="info">
-                                            <a href="{{item.product.get_url}}"
-                                                class="title text-dark">{{item.product.product_name}}</a>
+                                            <a href="{{item.product.get_url}}" class="title text-dark">{{item.product.product_name}}</a>
                                             {% if item.variations.all %}
                                             {% for item in item.variations.all %}
                                             <p class="text-muted small">
