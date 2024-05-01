@@ -211,11 +211,11 @@
           <ul class="pagination">
             {% if Products.has_previous %}
             <li class="page-item">
-              <a class="page-link" href="?page={{Products.previous_page_number}}"><i class="fas fa-arrow-alt-circle-left"></i></a>
+              <a class="page-link" href="?page={{Products.previous_page_number}}"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
             </li>
             {% else %}
             <li class="page-item disabled">
-              <a class="page-link" href="#"><i class="fas fa-arrow-alt-circle-left"></i></a>
+              <a class="page-link" href="#"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
             </li>
             {% endif %}
             {% for i in Products.paginator.page_range %}
@@ -230,10 +230,10 @@
               {% endif %}
             {% endfor %}
             {% if Products.has_next %}
-            <li class="page-item"><a class="page-link" href="?page={{Products.next_page_number}}"><i class="fas fa-arrow-alt-circle-right"></i></a></li>
+            <li class="page-item"><a class="page-link" href="?page={{Products.next_page_number}}"><i class="fa fa-arrow-right" aria-hidden="true"></i></a></li>
             <li class="page-item"><a class="page-link" href="?page={{Products.paginator.num_pages}}">Last</a></li>
             {% else %}
-            <li class="page-item disabled"><a class="page-link" href="#"><i class="fas fa-arrow-alt-circle-right"></i></a></li>
+            <li class="page-item disabled"><a class="page-link" href="#"><i class="fa fa-arrow-right" aria-hidden="true"></i></a></li>
             <li class="page-item disabled"><a class="page-link" href="#">Last</a></li>
             {% endif %}
           </ul>
@@ -247,3 +247,4 @@
 </section>
 <!-- ========================= SECTION CONTENT END// ========================= -->
 {% endblock content %}
+
