@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     "store",
     "carts",
     "orders",
- #   "admin_honeypot",  # admin honeypot package to prevent spam attacks
+    #"admin_honeypot",  # admin honeypot package to prevent spam attacks
     'storages'
 ]
 
