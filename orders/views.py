@@ -76,6 +76,7 @@ def payments(request):
                 'cart_items':cart_items                             
                 })
     email_message=EmailMessage(mail_subject,message,settings.EMAIL_HOST_USER, [request.user.email],)
+    email_message.content_subtype= 'html'  
     EmailThread(email_message).start()
     #and empty the cart.
     CartItem.objects.filter(user=request.user).delete()

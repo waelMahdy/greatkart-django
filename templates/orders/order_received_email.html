@@ -1,19 +1,27 @@
-
 {% autoescape off %}
-Hi {{user.first_name | lower | capfirst}},
+<div class="container">
+    <h2>Hi {{user.first_name | lower | capfirst}},</h2>
+    <div class="">
+        Your order has been received:
+    </div>
+    <div class="">
+        Order number: {{order.order_number}}
+    </div>
 
-Your order has been received:
+    <div class="card">
+        <h3 class="card-title">Items included:</h3>
+        <div class="card-body">
+            {% for Item in cart_items %}
 
-Order number: {{order.order_number}}
-Items included:
-{% for Item in cart_items %}
-
-- {{Item.quantity}} x {{Item.product.product_name}} at ${{Item.product.price|floatformat:2}} each
-
-{% endfor %}
-
-Thank you
-
+            {{Item.quantity}} x <img src="{{Item.product.image.url}}" width="10%">  {{Item.product.product_name}} at
+            ${{Item.product.price|floatformat:2}} each
+            <br>
+            {% endfor %}
+        </div>
+    </div>
+    <br><br><br><br>
+    Thank you for shopping with us. We hope to see you again soon!
+</div>
 
 
 {% endautoescape %}
